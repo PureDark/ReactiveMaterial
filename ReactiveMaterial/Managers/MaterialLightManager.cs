@@ -47,11 +47,11 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
             }
         }
 
-        public void CreateTubeLights(GameObject go)
+        public void CreateMaterialLights(GameObject go)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace ReactiveMaterial
 
                     colorBloomLight = ml.gameObject.AddComponent<ColorBloomPrePassLight>();
                     colorBloomLight.Init();
-                    colorBloomLight.materialLight = ml;
+                    colorBloomLight.LightDataListener = ml;
 
                     colorBloomLight.color = ml.color;
                     ReflectionUtil.SetPrivateFieldBase(colorBloomLight, "_ID", (int)ml.lightsID);
@@ -79,22 +79,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-            }
-        }
-
-        private void DestroyTubeLights()
-        {
-            try
-            {
-                for (int i = 0; i < mbppLights.Count; i++)
-                {
-                    GameObject.Destroy(mbppLights.Last());
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
             }
         }
     }

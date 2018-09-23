@@ -37,7 +37,8 @@ public class ColorBloomPrePassLight : BloomPrePassLight
 
     protected const float kMaxLength = 1000f;
 
-    public ReactiveMaterial.MaterialLight materialLight {
+    public ReactiveMaterial.ILightDataListener LightDataListener
+    {
         get;
         set;
     }
@@ -51,8 +52,7 @@ public class ColorBloomPrePassLight : BloomPrePassLight
         set
         {
             this._color = value;
-            //Console.WriteLine("Color Set : " + _color);
-            materialLight.SetMaterialColor(color);
+            LightDataListener.OnColorChanged(value);
         }
     }
     

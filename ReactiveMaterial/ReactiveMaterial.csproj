@@ -61,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorBloomPrePassLight.cs" />
+    <Compile Include="Descriptors\ILightDataListener.cs" />
+    <Compile Include="Descriptors\ShaderLight.cs" />
+    <Compile Include="Managers\ShaderLightManager.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Descriptors\MaterialLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

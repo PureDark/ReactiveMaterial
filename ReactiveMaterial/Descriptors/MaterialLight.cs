@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ReactiveMaterial
 {
-    public class MaterialLight : MonoBehaviour
+    public class MaterialLight : MonoBehaviour, ILightDataListener
     {
         public enum LightsID { Static = 0, BackLights = 1, BigRingLights = 2, LeftLasers = 3, RightLasers = 4, TrackAndBottom = 5 }
         public enum ColorType { None = 0, LeftColor = 1, RightColor = 2}
@@ -38,7 +38,7 @@ namespace ReactiveMaterial
                 if (gameObject.GetComponentInChildren<MaterialLightManager>(true) == null)
                 {
                     MaterialLightManager tlm = gameObject.AddComponent<MaterialLightManager>();
-                    tlm.CreateTubeLights(gameObject);
+                    tlm.CreateMaterialLights(gameObject);
                 }
                 if (CustomColor == ColorType.None)
                     return;
@@ -57,18 +57,26 @@ namespace ReactiveMaterial
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
             }
         }
 
-        public void SetMaterialColor(Color color)
+        public void OnColorChanged(Color color)
         {
-            foreach (Material mat in materials)
+            try
             {
-                mat.color = color;
-                mat.SetFloat("_Glow", color.a);
+                //Console.WriteLine("Color Set : " + color);
+                foreach (Material mat in materials)
+                {
+                    mat.color = color;
+                    mat.SetFloat("_Glow", color.a);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
             }
         }
 

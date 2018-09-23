@@ -7,7 +7,7 @@ namespace ReactiveMaterial
     class Plugin : IPlugin
     {
         public string Name => "ReactiveMaterials";
-        public string Version => "0.0.1";
+        public string Version => "0.0.2";
 
         public void OnApplicationStart()
         {
