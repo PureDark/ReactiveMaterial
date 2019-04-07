@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace ReactiveMaterial
 {
@@ -12,11 +9,15 @@ namespace ReactiveMaterial
         {
             obj.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).SetValue(obj, value);
         }
+        public static void SetPrivateField(this object obj, Type objType, string fieldName, object value)
+        {
+            objType.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).SetValue(obj, value);
+        }
 
         public static void SetPrivateFieldBase(this object obj, string fieldName, object value)
         {
-            var prop = obj.GetType().BaseType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            prop.SetValue(obj, value);
+            var field = obj.GetType().BaseType.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            field.SetValue(obj, value);
         }
 
         public static T GetPrivateField<T>(this object obj, string fieldName)

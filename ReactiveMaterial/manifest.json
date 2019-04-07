@@ -1,0 +1,10 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+  "author": "PureDark",
+  "description": "",
+  "gameVersion": "0.13.2",
+  "id": "reactive-material",
+  "name": "ReactiveMaterial",
+  "version": "0.0.3",
+  "features": []
+}

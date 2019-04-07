@@ -1,13 +1,19 @@
-﻿using IllusionPlugin;
+﻿using IPA;
+using IPALogger = IPA.Logging.Logger;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ReactiveMaterial
 {
-    class Plugin : IPlugin
+    class Plugin : IBeatSaberPlugin
     {
-        public string Name => "ReactiveMaterials";
-        public string Version => "0.0.2";
+        public string Name => "ReactiveMaterial";
+        public string Version => "0.0.3";
+
+        public void Init(IPALogger logger)
+        {
+            Logger.log = logger;
+        }
 
         public void OnApplicationStart()
         {
@@ -17,11 +23,15 @@ namespace ReactiveMaterial
         {
         }
 
-        private void SceneManagerOnActiveSceneChanged(Scene arg0, Scene scene)
+        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
         }
 
-        private void SceneManagerSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+        }
+
+        public void OnSceneUnloaded(Scene scene)
         {
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace ReactiveMaterial
         public enum ColorType { None = 0, LeftColor = 1, RightColor = 2}
 
         [Tooltip("Default Color")]
-        public Color color = Color.white;
+        public Color color = Color.black;
 
         [Tooltip("Sets the BaseColor to Custom Colors")]
         public ColorType CustomColor = ColorType.None;
@@ -59,7 +58,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
+                Logger.log.Error(e);
             }
         }
 
@@ -67,7 +66,7 @@ namespace ReactiveMaterial
         {
             try
             {
-                //Console.WriteLine("Color Set : " + color);
+                //Logger.log.Info("Color Set : " + color);
                 foreach (Material mat in materials)
                 {
                     mat.color = color;
@@ -76,7 +75,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
+                Logger.log.Error(e);
             }
         }
 
