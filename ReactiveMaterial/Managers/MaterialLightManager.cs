@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,7 +45,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
+                Logger.log.Error(e);
             }
         }
 
@@ -71,7 +69,7 @@ namespace ReactiveMaterial
                     colorBloomLight.LightDataListener = ml;
 
                     colorBloomLight.color = ml.color;
-                    ReflectionUtil.SetPrivateFieldBase(colorBloomLight, "_ID", (int)ml.lightsID);
+                    ReflectionUtil.SetPrivateField(colorBloomLight, typeof(BSLight), "_ID", (int)ml.lightsID);
 
                     mbppLights.Add(colorBloomLight);
                     materialLightDescriptors.Add(ml);
@@ -79,7 +77,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
+                Logger.log.Error(e);
             }
         }
     }

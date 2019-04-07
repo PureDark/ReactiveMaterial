@@ -141,7 +141,7 @@ public class ColorBloomPrePassLight : BloomPrePassLight
         return mesh;
     }
     
-    public override void FillMeshData(int lightNum, Vector3[] vertices, Color32[] colors32, Vector2[] uv2, Vector2[] uv3, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, float lineWidth)
+    public override void FillMeshData(int lightNum, Vector3[] vertices, Color[] colors, Vector4[] viewPos, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, float lineWidth)
     {
         float y = -this._length * this._center;
         float y2 = this._length * (1f - this._center);
@@ -292,8 +292,6 @@ public class ColorBloomPrePassLight : BloomPrePassLight
             }
         }
         Matrix4x4 inverse = projectionMatrix.inverse;
-        vector = inverse * vector3;
-        vector2 = inverse * vector4;
         Vector3 vector11 = vector3 / vector3.w;
         Vector3 a = vector4 / vector4.w;
         vector11.x = vector11.x * 0.5f + 0.5f;
@@ -306,27 +304,15 @@ public class ColorBloomPrePassLight : BloomPrePassLight
         Vector3 vector13 = new Vector3(-vector12.y, vector12.x, 0f);
         vector13.Normalize();
         vector13 *= lineWidth;
-        Vector3 v = new Vector3(vector.x / vector3.w, vector.y / vector3.w, vector.z / vector3.w);
-        Vector3 v2 = new Vector3(1f / vector3.w, 0f, 0f);
-        Vector3 v3 = new Vector3(vector2.x / vector4.w, vector2.y / vector4.w, vector2.z / vector4.w);
-        Vector3 v4 = new Vector3(1f / vector4.w, 0f, 0f);
         int num2 = lightNum * 4;
         vertices[num2] = vector11 - vector13;
         vertices[num2 + 1] = vector11 + vector13;
         vertices[num2 + 2] = a + vector13;
         vertices[num2 + 3] = a - vector13;
         Color32 color = this._color;
-        colors32[num2] = color;
-        colors32[num2 + 1] = color;
-        colors32[num2 + 2] = color;
-        colors32[num2 + 3] = color;
-        uv2[num2] = v;
-        uv2[num2 + 1] = v;
-        uv2[num2 + 2] = v3;
-        uv2[num2 + 3] = v3;
-        uv3[num2] = v2;
-        uv3[num2 + 1] = v2;
-        uv3[num2 + 2] = v4;
-        uv3[num2 + 3] = v4;
+        colors[num2] = color;
+        colors[num2 + 1] = color;
+        colors[num2 + 2] = color;
+        colors[num2 + 3] = color;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 namespace ReactiveMaterial
@@ -31,7 +29,7 @@ namespace ReactiveMaterial
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                Logger.log.Error(ex);
             }
         }
 

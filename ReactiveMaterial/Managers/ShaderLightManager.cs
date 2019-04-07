@@ -38,7 +38,7 @@ namespace ReactiveMaterial
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("{0}\n{1}", e.Message, e.StackTrace);
+                    Logger.log.Error(e);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace ReactiveMaterial
                     colorBloomLight = go.AddComponent<ColorBloomPrePassLight>();
                     colorBloomLight.Init();
                     colorBloomLight.LightDataListener = lightDataListener;
-                    ReflectionUtil.SetPrivateFieldBase(colorBloomLight, "_ID", i);
+                    ReflectionUtil.SetPrivateField(colorBloomLight, typeof(BSLight), "_ID", i);
 
                     bppLights.Add(colorBloomLight);
                     lightDataListeners.Add(lightDataListener);
@@ -96,7 +96,7 @@ namespace ReactiveMaterial
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Logger.log.Error(e);
             }
         }
     }
