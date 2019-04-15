@@ -8,6 +8,18 @@ namespace ReactiveMaterial
 {
     public class ShaderLightManager : MonoBehaviour
     {
+        private static ShaderLightManager _instance;
+
+        public static ShaderLightManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new ShaderLightManager();
+                return _instance;
+            }
+        }
+
         public enum LightsID { Static = 0, BackLights = 1, BigRingLights = 2, LeftLasers = 3, RightLasers = 4, TrackAndBottom = 5 }
 
         private List<BloomPrePassLight> bppLights;
@@ -49,20 +61,6 @@ namespace ReactiveMaterial
             color.g = (float)Math.Pow(color.g, 2.2);
             color.b = (float)Math.Pow(color.b, 2.2);
             return color;
-        }
-
-        private void OnEnable()
-        {
-            SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
-        }
-
-        private void OnDisable()
-        {
-            SceneManager.activeSceneChanged -= SceneManagerOnActiveSceneChanged;
-        }
-
-        private void SceneManagerOnActiveSceneChanged(Scene arg0, Scene arg1)
-        {
         }
 
         public void CreateLightDataForShader(GameObject go)
