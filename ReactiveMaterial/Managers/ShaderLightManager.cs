@@ -29,6 +29,7 @@ namespace ReactiveMaterial
         {
             public LightsID lightsID = LightsID.Static;
             private static float lastTime = 0;
+            private float lastAlpha = 0;
 
             public ShaderLightDataListener(LightsID lightsID)
             {
@@ -41,11 +42,16 @@ namespace ReactiveMaterial
                 {
                     string name = "_LightColor" + (int)lightsID;
                     Shader.SetGlobalColor(name, GammaCorrection(color));
-                    if (((0.752f < color.a && color.a <0.754f) || color.a == 1) && Time.time - lastTime > 0.1f)
+                    if ((color.a < lastAlpha) && Time.time - lastTime > 0.1f)
                     {
                         lastTime = Time.time;
+                        lastAlpha = 0;
                         Shader.SetGlobalColor("_LastColor", GammaCorrection(color));
                         //Console.WriteLine("OnColorChanged : _LastColor = {0}", Shader.GetGlobalColor("_LastColor"));
+                    }
+                    else
+                    {
+                        lastAlpha = color.a;
                     }
                 }
                 catch (Exception e)

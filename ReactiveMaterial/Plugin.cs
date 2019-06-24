@@ -1,14 +1,14 @@
 ﻿using IPALogger = IPA.Logging.Logger;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using IllusionPlugin;
+using IPA;
 
 namespace ReactiveMaterial
 {
-    class Plugin : IPlugin
+    class Plugin : IBeatSaberPlugin
     {
         public string Name => "ReactiveMaterial";
-        public string Version => "0.0.4";
+        public string Version => "0.1.0";
 
         public void Init(IPALogger logger)
         {
