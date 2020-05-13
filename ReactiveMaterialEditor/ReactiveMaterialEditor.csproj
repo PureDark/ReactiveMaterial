@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{536E6D8E-9750-494B-931C-960DDFCBDC1E}</ProjectGuid>
+    <ProjectGuid>{67C8A95B-F932-4352-9CC9-47405860CA53}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReactiveMaterial</RootNamespace>
     <AssemblyName>ReactiveMaterial</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,65 +28,38 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BS_Utils">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Plugins\BS_Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="Colors">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\Colors.dll</HintPath>
-    </Reference>
-    <Reference Include="HMLib">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\HMLib.dll</HintPath>
-    </Reference>
-    <Reference Include="HMRendering">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\HMRendering.dll</HintPath>
-    </Reference>
-    <Reference Include="IPA.Loader, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\IPA.Loader.dll</HintPath>
-    </Reference>
-    <Reference Include="Main">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\Main.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="UnityEngine.VRModule">
       <HintPath>..\..\..\SteamLibrary\SteamApps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.VRModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptors\ILightDataListener.cs" />
+    <Compile Include="Descriptors\MaterialLight.cs" />
     <Compile Include="Descriptors\ShaderLight.cs" />
     <Compile Include="EyeTracking.cs" />
     <Compile Include="MirrorReflection\MirrorReflection.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Descriptors\MaterialLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\BeatSaberSearching.cs" />
-    <Compile Include="Utils\Logger.cs" />
-    <Compile Include="Utils\ReflectionUtil.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="manifest.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "F:\SteamLibrary\SteamApps\common\Beat Saber\Plugins"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "F:\BeatSaberCustomSabers\UnityProject\Assets"
+copy "$(TargetPath)" "F:\BeatSaberPlatforms\Unity Project\BeatSaber Custom Platforms\Assets\_Scripts"
+copy "$(TargetPath)" "F:\BeatSaberAvatars\UnityProjects\CustomAvatars\Assets"</PostBuildEvent>
   </PropertyGroup>
 </Project>

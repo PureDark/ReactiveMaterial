@@ -1,58 +1,27 @@
 ﻿using IPALogger = IPA.Logging.Logger;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPA;
+using BS_Utils.Utilities;
 
 namespace ReactiveMaterial
 {
-    class Plugin : IBeatSaberPlugin
+
+    [Plugin(RuntimeOptions.SingleStartInit)]
+    class Plugin
     {
         public string Name => "ReactiveMaterial";
-        public string Version => "0.1.0";
+        public string Version => "0.3.0";
 
+        [Init]
         public void Init(IPALogger logger)
         {
             Logger.log = logger;
         }
 
+        [OnStart]
         public void OnApplicationStart()
         {
-        }
-
-        public void OnApplicationQuit()
-        {
-        }
-
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
-        {
-        }
-
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        {
-        }
-
-        public void OnSceneUnloaded(Scene scene)
-        {
-        }
-
-        public void OnLateUpdate()
-        {
-        }
-
-        public void OnLevelWasLoaded(int level)
-        {
-        }
-
-        public void OnLevelWasInitialized(int level)
-        {
-        }
-
-        public void OnUpdate()
-        {
-        }
-
-        public void OnFixedUpdate()
-        {
+            BSEvents.OnLoad();
         }
     }
 }
