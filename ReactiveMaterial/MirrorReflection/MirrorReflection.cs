@@ -33,7 +33,7 @@ namespace ReactiveMaterial
             var rend = GetComponent<Renderer>();
             if (!enabled || !rend || !rend.sharedMaterial || !rend.enabled)
                 return;
-
+            
             Camera cam = Camera.current;
             if (!cam)
             {
@@ -242,7 +242,10 @@ namespace ReactiveMaterial
             reflectionCamera = m_ReflectionCameras[currentCamera] as Camera;
             if (!reflectionCamera) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
             {
-                GameObject go = new GameObject("Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
+                GameObject camClone = Camera.main?.gameObject ?? GameObject.FindGameObjectsWithTag("MainCamera")[0];
+                GameObject go = Instantiate(camClone, Vector3.zero, Quaternion.identity, transform);
+                go.name = "Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID();
+                //GameObject go = new GameObject("Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
                 reflectionCamera = go.GetComponent<Camera>();
                 reflectionCamera.enabled = false;
                 reflectionCamera.transform.position = transform.position;

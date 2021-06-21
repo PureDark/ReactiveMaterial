@@ -19,8 +19,6 @@ namespace ReactiveMaterial
         private LightWithIdManager lightManager
         {
             get {
-                if(_lightManager == null)
-                    _lightManager = BeatSaberSearching.FindLightWithIdManager(BeatSaberSearching.GetCurrentEnvironment());
                 return _lightManager;
             }
             set
@@ -30,7 +28,7 @@ namespace ReactiveMaterial
         }
 
 
-        public class ShaderLightDataListener : ILightDataListener
+        public class ShaderLightDataListener
         {
             public LightsID lightsID = LightsID.Static;
             private static float lastTime = 0;
@@ -86,7 +84,7 @@ namespace ReactiveMaterial
                     lightDataListeners[i] = new ShaderLightDataListener((LightsID)i);
                 }
 
-                var colorManager = Resources.FindObjectsOfTypeAll<ColorManager>().FirstOrDefault();
+                var colorManager = Resources.FindObjectsOfTypeAll<SaberModelController>().FirstOrDefault().GetPrivateField<ColorManager>("_colorManager");
                 if (colorManager == null) return;
 
                 var leftColor = ReflectionUtil.GetPrivateField<SimpleColorSO>(colorManager, "_saberAColor");
@@ -100,13 +98,13 @@ namespace ReactiveMaterial
 
         private void OnEnable()
         {
-            BSEvents.beatmapEvent += OnBeatmapEvent;
+            //BSEvents.beatmapEvent += OnBeatmapEvent;
             BSEvents.gameSceneActive += OnGameScene;
         }
 
         private void OnDisable()
         {
-            BSEvents.beatmapEvent -= OnBeatmapEvent;
+            //BSEvents.beatmapEvent -= OnBeatmapEvent;
             BSEvents.gameSceneActive -= OnGameScene;
         }
 
@@ -115,16 +113,16 @@ namespace ReactiveMaterial
             lightManager = BeatSaberSearching.FindLightWithIdManager(BeatSaberSearching.GetCurrentEnvironment());
         }
 
-        private void OnBeatmapEvent(BeatmapEventData obj)
+        private void Update()
         {
             try
             {
-                int type = (int)obj.type + 1;
-                if (1 <= type && type <= 5)
+                if (lightManager == null)
+                    return;
+                for (int lightID = 1; lightID < 5; lightID++)
                 {
-                    //Console.WriteLine("OnBeatmapEvent : " + type);
-                    Color color = lightManager.GetColorForId(type) * 0.9f;
-                    lightDataListeners[type].OnColorChanged(color);
+                    Color color = lightManager.GetColorForId(lightID) * 0.9f;
+                    lightDataListeners[lightID].OnColorChanged(color);
                 }
             }
             catch (Exception e)

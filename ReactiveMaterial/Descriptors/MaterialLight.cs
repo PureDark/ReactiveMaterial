@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ReactiveMaterial
 {
-    public class MaterialLight : MonoBehaviour, ILightDataListener
+    public class MaterialLight : MonoBehaviour
     {
         public enum LightsID { Static = 0, BackLights = 1, BigRingLights = 2, LeftLasers = 3, RightLasers = 4, TrackAndBottom = 5 }
         public enum ColorType { None = 0, LeftColor = 1, RightColor = 2}
@@ -44,7 +44,7 @@ namespace ReactiveMaterial
             {
                 if (CustomColor == ColorType.None)
                     return;
-                var colorManager = Resources.FindObjectsOfTypeAll<ColorManager>().FirstOrDefault();
+                var colorManager = Resources.FindObjectsOfTypeAll<SaberModelController>().FirstOrDefault().GetPrivateField<ColorManager>("_colorManager");
                 if (colorManager == null) return;
 
                 var leftColor = ReflectionUtil.GetPrivateField<SimpleColorSO>(colorManager, "_saberAColor");
@@ -52,11 +52,13 @@ namespace ReactiveMaterial
                 color = (CustomColor == ColorType.LeftColor) ? leftColor.color : rightColor.color;
                 foreach (Material mat in materials)
                 {
-                    if (mat.HasProperty("_BaseColor"))
-                    {
-                        color.a = mat.GetColor("_BaseColor").a;
-                        mat.SetColor("_BaseColor", color);
-                    }
+                    //if (mat.HasProperty("_Color"))
+                    //{
+                    //    color.a = mat.GetColor("_Color").a;
+                    //    mat.SetColor("_Color", color);
+                    //}
+                    color.a = mat.color.a;
+                    mat.color = color;
                 }
             }
             catch (Exception e)
@@ -69,8 +71,8 @@ namespace ReactiveMaterial
         private void OnEnable()
         {
             BSEvents.menuSceneLoaded += SetColorToDefault;
-            BSEvents.menuSceneLoadedFresh += SetColorToDefault;
-            BSEvents.beatmapEvent += OnBeatmapEvent;
+            BSEvents.lateMenuSceneLoadedFresh += SetColorToDefault;
+            //BSEvents.beatmapEvent += OnBeatmapEvent;
             BSEvents.gameSceneActive += OnGameScene;
             SetColorToDefault();
         }
@@ -78,8 +80,8 @@ namespace ReactiveMaterial
         private void OnDisable()
         {
             BSEvents.menuSceneLoaded -= SetColorToDefault;
-            BSEvents.menuSceneLoadedFresh -= SetColorToDefault;
-            BSEvents.beatmapEvent -= OnBeatmapEvent;
+            BSEvents.lateMenuSceneLoadedFresh -= SetColorToDefault;
+            //BSEvents.beatmapEvent -= OnBeatmapEvent;
             BSEvents.gameSceneActive -= OnGameScene;
         }
 
@@ -88,14 +90,14 @@ namespace ReactiveMaterial
             lightManager = BeatSaberSearching.FindLightWithIdManager(BeatSaberSearching.GetCurrentEnvironment());
         }
 
-        private void OnBeatmapEvent(BeatmapEventData obj)
+        private void Update()
         {
-            int type = (int)obj.type + 1;
-            if (type == (int)lightsID)
+            try
             {
-                Color color = lightManager.GetColorForId(type) * 0.9f;
+                Color color = lightManager.GetColorForId((int)lightsID) * 0.9f;
                 OnColorChanged(color);
             }
+            catch (Exception) { };
         }
 
         public void OnColorChanged(Color color)
@@ -114,8 +116,19 @@ namespace ReactiveMaterial
                 Logger.log.Error(e);
             }
         }
-
         private void SetColorToDefault()
+        {
+            try
+            {
+                OnColorChanged(this.color);
+            }
+            catch (Exception e)
+            {
+                Logger.log.Error(e);
+            }
+        }
+
+        private void SetColorToDefault(ScenesTransitionSetupDataSO scenesTransitionSetupDataSO)
         {
             try
             {

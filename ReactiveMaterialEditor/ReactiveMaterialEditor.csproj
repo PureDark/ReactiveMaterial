@@ -52,7 +52,6 @@
     <Compile Include="Descriptors\ILightDataListener.cs" />
     <Compile Include="Descriptors\MaterialLight.cs" />
     <Compile Include="Descriptors\ShaderLight.cs" />
-    <Compile Include="EyeTracking.cs" />
     <Compile Include="MirrorReflection\MirrorReflection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
